@@ -5,10 +5,18 @@ networks:
     externel: true    
 # we manually created a bridge network outside of Compose using the docker [network rosbosohop,
 # you can connect your Compose services to it by marking the network as external=true.  
+volumes:
+  mongodb: # Declare the named volume
+  redis:
+  mysql:
+  rabbimq: # docker volume create rabbitmq
+
 services:
   mongodb:
     image: lvnare532/mongodb:v1
     container_name: mongodb
+    volumes:
+    - mongodb:/data/db # moumting /data/db
   catalogue:
     image: lvnare532/catalogue:v1
     container_name: catalogue
@@ -17,6 +25,8 @@ services:
   redis:
     image: redis:7.0  # directly iwill pull it form docker hub , so iam not using lvnare532
     container_name: redis
+    volumes:
+    - redis:/data
   user:
     image: lvnare532/user:v1
     container_name: user
@@ -32,6 +42,8 @@ services:
   mysql:
     image: lvnare532/mysql:v1
     container_name: mysql
+    volumes:
+    - mysql:/var/lib/mysql
   shipping:
     image: lvnare532/shipping:v1
     container_name: shipping
@@ -44,6 +56,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
+    volumes:
+    - rabbimq:/var/lib/rabbimq
   payment:
     image: lvnare532/payment:v1
     container_name: payment
