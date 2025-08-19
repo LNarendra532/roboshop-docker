@@ -16,7 +16,7 @@ services:
     image: lvnare532/mongodb:v1
     container_name: mongodb
     volumes:
-    - mongodb:/data/db # moumting /data/db
+    - mongodb:/data/db # moumting /data/db # data is going tobe store here
   catalogue:
     image: lvnare532/catalogue:v1
     container_name: catalogue
